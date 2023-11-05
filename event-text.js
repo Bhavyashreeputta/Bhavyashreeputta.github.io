@@ -10,9 +10,24 @@
 $(function() {
 	$('#create-event-button').click(function() {
 		if (checkInputs()) {
+			
 			writeEventToScreen(getEventText());
 		}
+		$('#start-time-row, #end-time-row').show();
+		$('#all-day-event-checkbox').change(function() {
+			if ($(this).is(':checked')) {
+				$('#all-day-event-row').show();
+				$('#start-time-row').hide();
+				$('#end-time-row').hide();
+			} else {
+				$('#all-day-event-row').hide();
+				$('#start-time-row').show();
+				$('#end-time-row').show();
+			}
+		});
+		clearInputs();
 	});
+   
 });
 
 // End time must come after start time
@@ -21,7 +36,81 @@ function isValidEndTime() {
 	var endTime = $('#event-end-date').datetimepicker('getValue');
     return !(endTime < startTime);
 }
-function checkInputs() {
+function checkInputs() 
+{
+	if (!$("#event-name").val()) {
+		writeEventToScreen("Please enter event name");
+		
+		$("#event-name").addClass("error");
+		$("#event-name").focus();
+		return false;
+	  }
+	  if (!$("#event-location").val()) {
+		writeEventToScreen("Please enter a location");
+		$("#event-location").addClass("error");
+		$("#event-location").focus();
+		return false;
+	  }
+	
+	  if ($("#all-day-event-checkbox").is(":checked")) {
+		if (!$("#all-day-event-date").val()) {
+		  writeEventToScreen("Please enter the date for an all day event");
+		  $("#all-day-event-date").addClass("error");
+		  $("#all-day-event-date").focus(function () {
+			$("#all-day-event-date").datepicker("show");
+		  });
+		  $("#all-day-event-date").focus();
+		  return false;
+		} else if (
+		  !$("#recurrent-event-end-date").val() &&
+		  $("#recurrent-event-type-selector").val() != "none"
+		) {
+		  writeEventToScreen("Please enter the repeat end date");
+		  $("#recurrent-event-end-date").addClass("error");
+		  $("#recurrent-event-end-date").focus(function () {
+			$("#recurrent-event-end-date").datepicker("show");
+		  });
+		  $("#recurrent-event-end-date").focus();
+		  return false;
+		} else if (
+		  !$.isNumeric($("#daily-recurrent-freq").val()) ||
+		  $("#daily-recurrent-freq").val() < 1
+		) {
+		  writeEventToScreen("Please enter a valid numeric value above 0");
+		  $("#daily-recurrent-freq").focus();
+		  return false;
+		} else {
+		  return true;
+		}
+	  }
+	  if (!$("#event-start-date").val() && !$("#event-end-date").val()) {
+		writeEventToScreen("Please enter the start date and end date.");
+		$("#event-start-date").addClass("error");
+		$("#event-end-date").addClass("error");
+		$("#event-start-date").focus(function () {
+		  $("#event-start-date").datepicker("show");
+		});
+		$("#event-start-date").focus();
+		return false;
+	  }
+	
+	  if (!$("#event-start-date").val()) {
+		writeEventToScreen("Please enter a start date.");
+		$("#event-start-date").focus(function () {
+		  $("#event-start-date").datepicker("show");
+		});
+		$("#event-start-date").focus();
+		return false;
+	  }
+	  if (!$("#event-end-date").val()) {
+		writeEventToScreen("Please enter a end date.");
+		$("#event-end-date").focus(function () {
+		  $("#event-end-date").datepicker("show");
+		});
+		$("#event-end-date").focus();
+		return false;
+	  }
+
 	if (!isValidEndTime()) {
 		writeEventToScreen('End date must come after start date.');
 		return false;

@@ -22,35 +22,44 @@
 <body>
 <div id="container">
 
+    <div class="card col-xl-6" id = "heading">
+        <span>Create Your Everyday Events</span>
+    </div>
+
     <div id="content">
-    <div class="card col-lg-4">
+    <div class="card col-lg-6">
         <input id="event-name" class="title col-md-12" type="text" placeholder="New Event Name">
         <input id="event-location" class="col-md-12" type="text" placeholder="Add Location">
-        <div class="line"></div>
+        <!-- <div class="line"></div> -->
         <table id="time-details">
             <tr>
-                <td class="time-detail-name">all-day:</td>
-                <td class=""><input id="all-day-event-checkbox" type="checkbox"></td>
+                <td class="time-detail-name">All-day:</td>
+                <td>
+                    <label class="switch">
+                        <input type="checkbox" id="all-day-event-checkbox">
+                        <span class="slider round"></span>
+                    </label>
+                </td>
             </tr>
             <tr id="start-time-row">
-                <td class="time-detail-name">starts:</td>
-                <td class=""><input id="event-start-date" type="text"></td>
+                <td class="time-detail-name" style="top: 0;">Starts</td>
+                <td class=""><input id="event-start-date" class="col-md-4" type="text"></td>
             </tr>
             <tr id="end-time-row">
-                <td class="time-detail-name">ends:</td>
-                <td class=""><input id="event-end-date" type="text"></td>
+                <td class="time-detail-name">Ends</td>
+                <td class=""><input id="event-end-date" class="col-md-4" type="text"></td>
             </tr>
             <tr id="all-day-event-row" class="hidden">
-                <td class="time-detail-name">date:</td>
+                <td class="time-detail-name">Date</td>
                 <td class=""><input id="all-day-event-date" type="text"></td>
             </tr>
 
 
             <!-- Event Repeat Details -->
             <tr>
-                <td class="time-detail-name">repeat:</td>
+                <td class="time-detail-name">Repeat</td>
                 <td class="">
-                    <select id="recurrent-event-type-selector">
+                    <select id="recurrent-event-type-selector" class="col-md-4">
                         <option value="none" selected="selected">None</option>
                         <option value="day">Every Day</option>
                         <option value="week">Every Week</option>
@@ -62,8 +71,8 @@
                 </td>
             </tr>
             <tr id="recurrent-event-end-date-row" class="hidden">
-                <td class="time-detail-name">end repeat:</td>
-                <td class=""><input id="recurrent-event-end-date" type="text"></div></td>
+                <td class="time-detail-name">End Repeat:</td>
+                <td class=""><input class="col-md-4" id="recurrent-event-end-date" type="text"></td>
             </tr>
         </table>
 
@@ -73,7 +82,7 @@
         <table id="recurrent-event-details" class="hidden">
             <tr>
                 <td>Frequency: </td>
-                <td><select id="recurrent-event-time-selector">
+                <td><select class="col-md-4" id="recurrent-event-time-selector">
                     <option value="daily" selected="selected">Daily</option>
                     <option value="weekly">Weekly</option>
                     <option value="monthly">Monthly</option>
@@ -228,11 +237,11 @@
     </div>
     </div>
 
-    <div class="card col-lg-4">
-        <button id="create-event-button" class="btn btn-secondary" type="button">Create Event</button>
+    <div class="card col-lg-6">
+        <button id="create-event-button" class="btn btn-primary" type="button">Create Event</button>
     </div>
 
-    <div id="new-event-text" class="card col-lg-4"></div>
+    <div id="new-event-text" class="card col-lg-6"></div>
     </div>
 
 </div>

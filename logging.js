@@ -12,12 +12,17 @@
 
 var ENABLE_NETWORK_LOGGING = true; // Controls network logging.
 var ENABLE_CONSOLE_LOGGING = true; // Controls console logging.
-var LOG_VERSION = 'A';             // Labels every entry with version: "A".
+var LOG_VERSION = 'B';             // Labels every entry with version: "A".
 
 // These event types are intercepted for logging before jQuery handlers.
 var EVENT_TYPES_TO_LOG = {
   mousedown: true,
-  keydown: true
+  keydown: true,
+  LocationLog: true,
+  AllDayCheck: true,
+  StartDateCheck: true,
+  EnddateCheck: true,
+  RepeatEndDate: true
 };
 
 // These event properties are copied to the log if present.
@@ -33,13 +38,15 @@ var GLOBAL_STATE_TO_LOG = function() {
   };
 };
 
-(function() {
+(function() 
+{
 
-// A persistent unique id for the user.
-var uid = getUniqueId();
+  // A persistent unique id for the user.
+  var uid = getUniqueId();
 
-// Hooks up all the event listeners.
-function hookEventsToLog() {
+
+  // Hooks up all the event listeners.
+  function hookEventsToLog() {
   // Set up low-level event capturing.  This intercepts all
   // native events before they bubble, so we log the state
   // *before* normal event processing.
@@ -56,6 +63,8 @@ function hookEventsToLog() {
   // Listen to 'log' events which are triggered anywhere in the document.
   $(document).on('log', logEvent);
 }
+
+
 
 // Returns a CSS selector that is descriptive of
 // the element, for example, "td.left div" for
@@ -115,6 +124,7 @@ function getUniqueId() {
   return localStorage['uid'];
 }
 
+
 // Log the given event.
 function logEvent(event, customName, customInfo) {
   var time = (new Date).getTime();
@@ -127,6 +137,8 @@ function logEvent(event, customName, customInfo) {
       infoObj[key] = event[key];
     }
   }
+
+
   // Let a custom event add fields to the info.
   if (customInfo) {
     $.extend(infoObj, customInfo);
@@ -143,12 +155,14 @@ function logEvent(event, customName, customInfo) {
   }
 }
 
+
 // OK, go.
 if (ENABLE_NETWORK_LOGGING) {
   hookEventsToLog();
 }
 
 })();
+
 
 /////////////////////////////////////////////////////////////////////////////
 // CHANGE ME:
@@ -175,9 +189,10 @@ if (ENABLE_NETWORK_LOGGING) {
 //
 /////////////////////////////////////////////////////////////////////////////
 
-// "B" version network log submission function
+
+// B version network log submission function
 // submits to the google form at this URL:
-// docs.google.com/forms/d/1kuS8Hy5vzO9HHMqDIBbBT8WMGOntq5iY5SE1uNsZ27A/edit
+// docs.google.com/forms/d/e/1FAIpQLSdyrClgrRIv8vXStno3uRHQ4TjoQT93U9svexNBAbb6JLb73g/viewform?usp=sf_link
 function sendNetworkLog(
   uid,
   time,
